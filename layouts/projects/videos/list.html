@@ -1,0 +1,89 @@
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "list" }}
+
+  <header class="relative">
+    {{ if .Params.showBreadcrumbs | default (site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    {{ if and .IsSection .Parent (eq .Parent.Type "projects") }}
+      {{ partial "projects-back.html" . }}
+    {{ end }}
+    <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      {{ .Title | emojify }}
+    </h1>
+    <div class="mt-1 mb-2 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/list.html" (dict "context" . "scope" "single") }}
+    </div>
+  </header>
+
+  <section class="mt-0 prose flex max-w-full flex-col dark:prose-invert lg:flex-row mb-10">
+    <div class="min-w-0 min-h-0 max-w-prose w-full">
+      {{ .Content }}
+    </div>
+  </section>
+
+  {{ $films := slice }}
+  {{ $shorts := slice }}
+  {{ range .Pages.ByWeight }}
+    {{ if in .Params.externalUrl "/shorts/" }}
+      {{ $shorts = $shorts | append . }}
+    {{ else }}
+      {{ $films = $films | append . }}
+    {{ end }}
+  {{ end }}
+
+  {{ if gt (len $films) 0 }}
+    <section class="mt-8 grid gap-4 sm:grid-cols-2">
+      {{ range $films }}
+        {{ $thumb := "" }}
+        {{ with .Resources.GetMatch "feature*" }}
+          {{ $thumb = .RelPermalink }}
+        {{ end }}
+        <a href="{{ .Params.externalUrl }}" class="group block min-w-0" target="_blank" rel="noopener noreferrer">
+          <div class="overflow-hidden rounded-lg bg-neutral-800">
+            {{ with $thumb }}
+              <img
+                src="{{ . }}"
+                alt=""
+                class="aspect-video w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                loading="lazy"
+                decoding="async"
+              />
+            {{ else }}
+              <div class="aspect-video w-full"></div>
+            {{ end }}
+          </div>
+          <h2 class="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ .Title }}</h2>
+        </a>
+      {{ end }}
+    </section>
+  {{ end }}
+
+  {{ if gt (len $shorts) 0 }}
+    <section class="mt-8 flex gap-3 overflow-x-auto pb-2">
+      {{ range $shorts }}
+        {{ $thumb := "" }}
+        {{ with .Resources.GetMatch "feature*" }}
+          {{ $thumb = .RelPermalink }}
+        {{ end }}
+        <a href="{{ .Params.externalUrl }}" class="group block w-36 shrink-0" target="_blank" rel="noopener noreferrer">
+          <div class="overflow-hidden rounded-lg bg-neutral-800">
+            {{ with $thumb }}
+              <img
+                src="{{ . }}"
+                alt=""
+                class="w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                style="aspect-ratio: 9 / 16;"
+                loading="lazy"
+                decoding="async"
+              />
+            {{ else }}
+              <div class="w-full" style="aspect-ratio: 9 / 16;"></div>
+            {{ end }}
+          </div>
+          <h2 class="mt-2 text-sm font-medium text-neutral-900 dark:text-neutral" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ .Title }}</h2>
+        </a>
+      {{ end }}
+    </section>
+  {{ end }}
+{{ end }}

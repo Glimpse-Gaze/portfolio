@@ -33,7 +33,8 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --minify
+        # Keep the live GitHub Pages URLs stable until glimpsegaze.com serves this site.
+        run: hugo --minify --baseURL https://Glimpse-Gaze.github.io/portfolio/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

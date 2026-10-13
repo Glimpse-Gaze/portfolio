@@ -25,9 +25,9 @@ title = "Glimpse & Gaze"
     { youtube = "https://www.youtube.com/@GlimpseGaze"},
     { facebook = "https://www.facebook.com/GlimpseAndGaze"},
     { substack = "https://substack.com/@glimpseandgaze" },
-    { orcid = "https://orcid.org/0000-0003-0540-4605"},
-    { github = "https://github.com/Glimpse-Gaze" },
     { patreon = "https://buymeacoffee.com/glimpsegaze"},
+    { github = "https://github.com/Glimpse-Gaze" },
+    { orcid = "https://orcid.org/0000-0003-0540-4605"},
     { email = "mailto:glimpseandgaze@gmail.com" }
   ]
 #     { email = "mailto:hello@your_domain.com" },

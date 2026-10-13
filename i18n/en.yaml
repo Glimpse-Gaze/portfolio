@@ -1,0 +1,11 @@
+- id: projects.back
+  translation: "Back"
+
+- id: highlights.title
+  translation: "Highlights"
+
+- id: highlights.previous
+  translation: "Previous highlight"
+
+- id: highlights.next
+  translation: "Next highlight"

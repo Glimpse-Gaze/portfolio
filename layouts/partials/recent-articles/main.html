@@ -1,0 +1,3 @@
+{{ if .Site.Params.homepage.showRecent | default false }}
+  {{ partial "highlights.html" . }}
+{{ end }}

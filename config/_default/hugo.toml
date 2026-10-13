@@ -3,7 +3,7 @@
 # https://blowfish.page/docs/getting-started/
 
 theme = "blowfish"
-baseURL = "https://Glimpse-Gaze.github.io/portfolio/"
+baseURL = "https://glimpsegaze.com/"
 defaultContentLanguage = "en"
 locale = "en"
 
@@ -25,6 +25,10 @@ enableEmoji = true
 
 [imaging]
   anchor = 'Center'
+
+[caches]
+  [caches.images]
+    dir = ":cacheDir/images"
 
 [taxonomies]
   tag = "tags"

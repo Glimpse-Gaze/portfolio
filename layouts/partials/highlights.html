@@ -1,0 +1,123 @@
+{{ $paths := slice
+  "/projects/interactive-software/vegetable-survey"
+  "/projects/interactive-software/schnitzelbank"
+  "/projects/interactive-software/3d-kamishibai-models"
+  "/projects/interactive-software/media-phylogeny-diagram"
+  "/projects/articles/the-archaeology-of-ai-thinking-machines"
+}}
+{{ $pages := slice }}
+{{ range $paths }}
+  {{ with site.GetPage . }}
+    {{ $pages = $pages | append . }}
+  {{ end }}
+{{ end }}
+
+{{ if gt (len $pages) 0 }}
+  <section class="highlights" data-highlights aria-roledescription="carousel" aria-label="{{ i18n "highlights.title" }}">
+    <h2 class="mt-8 mb-6 text-2xl font-extrabold">{{ i18n "highlights.title" }}</h2>
+    <div class="highlights__frame">
+      <button type="button" class="highlights__arrow highlights__arrow--prev" aria-label="{{ i18n "highlights.previous" }}">&#8249;</button>
+      <div class="highlights__viewport">
+        <div class="highlights__track">
+          {{ range $pages }}
+            {{ $thumb := "" }}
+            {{ with .Resources.GetMatch "feature*" }}
+              {{ $thumb = .RelPermalink }}
+            {{ end }}
+            <a class="highlights__slide" href="{{ .RelPermalink }}">
+              {{ with $thumb }}
+                <img src="{{ . }}" alt="" />
+              {{ end }}
+              <span class="highlights__caption">
+                <span class="highlights__heading">{{ .Title }}</span>
+              </span>
+            </a>
+          {{ end }}
+        </div>
+      </div>
+      <button type="button" class="highlights__arrow highlights__arrow--next" aria-label="{{ i18n "highlights.next" }}">&#8250;</button>
+    </div>
+    <div class="highlights__dots">
+      {{ range $index, $page := $pages }}
+        <button
+          type="button"
+          class="highlights__dot{{ if eq $index 0 }} is-active{{ end }}"
+          data-index="{{ $index }}"
+          aria-label="{{ $page.Title }}"
+          {{ if eq $index 0 }}aria-current="true"{{ end }}></button>
+      {{ end }}
+    </div>
+  </section>
+  <script>
+    (function () {
+      var root = document.querySelector("[data-highlights]");
+      if (!root) return;
+      var track = root.querySelector(".highlights__track");
+      var slides = root.querySelectorAll(".highlights__slide");
+      var dots = root.querySelectorAll(".highlights__dot");
+      var index = 0;
+      var timer = null;
+      var paused = false;
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function render() {
+        track.style.transform = "translateX(" + -index * 100 + "%)";
+        dots.forEach(function (dot, i) {
+          var on = i === index;
+          dot.classList.toggle("is-active", on);
+          if (on) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+      }
+
+      function go(next) {
+        index = (next + slides.length) % slides.length;
+        render();
+      }
+
+      function arm() {
+        window.clearTimeout(timer);
+        if (paused || reduce || slides.length < 2) return;
+        timer = window.setTimeout(function () {
+          go(index + 1);
+          arm();
+        }, 7000);
+      }
+
+      root.querySelector(".highlights__arrow--prev").addEventListener("click", function () {
+        go(index - 1);
+        arm();
+      });
+      root.querySelector(".highlights__arrow--next").addEventListener("click", function () {
+        go(index + 1);
+        arm();
+      });
+      dots.forEach(function (dot) {
+        dot.addEventListener("click", function () {
+          go(Number(dot.getAttribute("data-index")));
+          arm();
+        });
+      });
+      root.addEventListener("mouseenter", function () {
+        paused = true;
+        window.clearTimeout(timer);
+      });
+      root.addEventListener("mouseleave", function () {
+        paused = false;
+        arm();
+      });
+      root.addEventListener("focusin", function () {
+        paused = true;
+        window.clearTimeout(timer);
+      });
+      root.addEventListener("focusout", function (event) {
+        if (!root.contains(event.relatedTarget)) {
+          paused = false;
+          arm();
+        }
+      });
+      render();
+      arm();
+    })();
+  </script>
+{{ end }}
