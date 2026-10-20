@@ -18,9 +18,6 @@
     {{ if .Params.showBreadcrumbs | default (site.Params.list.showBreadcrumbs | default false) }}
       {{ partial "breadcrumbs.html" . }}
     {{ end }}
-      {{ if and .IsSection .Parent (eq .Parent.Type "projects") }}
-        {{ partial "projects-back.html" . }}
-      {{ end }}
       <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
         {{ .Title | emojify }}
       </h1>
@@ -53,6 +50,7 @@
         {{ $sectionFeaturedURL := "" }}
         {{ $sectionRecentPage := "" }}
         {{ $sectionTitle := .Title }}
+        {{ $sectionImageAlt := .Title }}
 
         {{ $sectionPages := .Pages.ByDate.Reverse }}
         {{ if gt (len $sectionPages) 0 }}
@@ -60,6 +58,7 @@
         {{ end }}
 
         {{ with $sectionRecentPage }}
+          {{ with .Params.imageAlt }}{{ $sectionImageAlt = . }}{{ end }}
           {{ $sectionPage := . }}
           {{ $candidatePatterns := slice "feature*" "cover*" "thumbnail*" "*feature*" "*cover*" "*thumbnail*" "background*" "*background*" }}
           {{ range $candidatePatterns }}
@@ -91,7 +90,7 @@
             <div class="relative w-full overflow-hidden" style="aspect-ratio: 16 / 9;">
               <img
                 src="{{ . }}"
-                alt=""
+                alt="{{ $sectionImageAlt }}"
                 class="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                 loading="lazy"
                 decoding="async"
@@ -199,4 +198,9 @@
     </section>
   {{ end }}
   {{ partial "pagination.html" . }}
+  {{ if and .IsSection .Parent (eq .Parent.Type "projects") }}
+    <div class="mt-12 mb-2 flex">
+      {{ partial "projects-back.html" . }}
+    </div>
+  {{ end }}
 {{ end }}

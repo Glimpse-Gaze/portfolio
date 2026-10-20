@@ -1,11 +1,12 @@
 ---
 title: "Schnitzelbank"
+imageAlt: "Two pictorial song sheets side by side: a German Schnitzelbank board of labelled drawings, and a Kashubian board with pictures written onto musical staves."
 date: 2026-10-12
 description: "An interactive pictorial songboard for Schnitzelbank and its Kashubian counterpart."
 summary: "Play the song and answer with the picture: a German rebus board beside a Kashubian one."
 tags: ["song", "Schnitzelbank", "Kashubian"]
 ---
-![Feature](feature.png)
+![Two pictorial song sheets side by side: a German Schnitzelbank board of labelled drawings, and a Kashubian board with pictures written onto musical staves.](feature.png)
 
 # [Play Schnitzelbank](https://schnitzelbank.glimpsegaze.com)
 

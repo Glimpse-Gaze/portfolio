@@ -1,51 +1,85 @@
-{{ $paths := slice
-  "/projects/interactive-software/vegetable-survey"
-  "/projects/interactive-software/schnitzelbank"
-  "/projects/interactive-software/3d-kamishibai-models"
-  "/projects/interactive-software/media-phylogeny-diagram"
-  "/projects/articles/the-archaeology-of-ai-thinking-machines"
+{{ $items := slice
+  (dict
+    "path" "/projects/interactive-software/vegetable-survey"
+    "blurb" "A short, playful questionnaire about a category everyone uses and nobody quite agrees on. There is no answer key. You sort the grey zone, rank how vegetable a thing feels, and then set your list against everyone else's on a world map. The boards are interactive, a little competitive, and open in English and Polish.")
+  (dict
+    "path" "/projects/interactive-software/schnitzelbank"
+    "blurb" "Two pictorial songboards sit side by side: the German rebus song and its Kashubian counterpart, Kaszëbsczé nótë. You can listen while a hand points along the pictures, or play it, clicking the drawing when the frame lands on it. The lyric and the picture stay locked together, so the song is something you perform.")
+  (dict
+    "path" "/projects/interactive-software/3d-kamishibai-models"
+    "blurb" "These models rebuild two historical forms of Japanese paper theatre, tachi-e and hira-e, as something you can operate rather than only look at. Numbered markers open short notes and move the camera, and most pieces carry an animation you can play. Follow the guided path, or orbit the stage and pick up any part yourself.")
+  (dict
+    "path" "/projects/interactive-software/media-phylogeny-diagram"
+    "blurb" "An explorable map of how storytelling media branch, borrow, and cross cultures, with kamishibai's flat pictures and standing figures at the centre. It is not a single timeline. You open nodes for short histories, unfold branches, and follow three kinds of link: lineage, descent, and a shared form.")
+  (dict
+    "path" "/projects/articles/the-archaeology-of-ai-thinking-machines"
+    "blurb" "An essay that traces mechanical intelligence back through the machines, diagrams, and habits of thought that came before today's AI. It is less a news piece than a dig into how people have imagined a device that could think, and which assumptions those machines still carry.")
 }}
-{{ $pages := slice }}
-{{ range $paths }}
-  {{ with site.GetPage . }}
-    {{ $pages = $pages | append . }}
+{{ $slides := slice }}
+{{ range $items }}
+  {{ $blurb := .blurb }}
+  {{ with site.GetPage .path }}
+    {{ $slides = $slides | append (dict "page" . "blurb" $blurb) }}
   {{ end }}
 {{ end }}
 
-{{ if gt (len $pages) 0 }}
-  <section class="highlights" data-highlights aria-roledescription="carousel" aria-label="{{ i18n "highlights.title" }}">
+{{ if gt (len $slides) 0 }}
+  <section class="highlights" data-highlights data-expand-label="{{ i18n "highlights.expand" }}" data-collapse-label="{{ i18n "highlights.collapse" }}" aria-roledescription="carousel" aria-label="{{ i18n "highlights.title" }}">
     <h2 class="mt-8 mb-6 text-2xl font-extrabold">{{ i18n "highlights.title" }}</h2>
     <div class="highlights__frame">
-      <button type="button" class="highlights__arrow highlights__arrow--prev" aria-label="{{ i18n "highlights.previous" }}">&#8249;</button>
+      <button type="button" class="highlights__arrow highlights__arrow--prev" aria-label="{{ i18n "highlights.previous" }}"></button>
       <div class="highlights__viewport">
         <div class="highlights__track">
-          {{ range $pages }}
+          {{ range $index, $slide := $slides }}
+            {{ $page := $slide.page }}
             {{ $thumb := "" }}
-            {{ with .Resources.GetMatch "feature*" }}
+            {{ with $page.Resources.GetMatch "feature*" }}
               {{ $thumb = .RelPermalink }}
             {{ end }}
-            <a class="highlights__slide" href="{{ .RelPermalink }}">
-              {{ with $thumb }}
-                <img src="{{ . }}" alt="" />
-              {{ end }}
-              <span class="highlights__caption">
-                <span class="highlights__heading">{{ .Title }}</span>
-              </span>
-            </a>
+            <div class="highlights__slide">
+              <div class="highlights__media">
+                <a class="highlights__slide-link" href="{{ $page.RelPermalink }}">
+                  {{ with $thumb }}
+                    <img src="{{ . }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" />
+                  {{ end }}
+                  <span class="highlights__caption">
+                    <span class="highlights__heading">{{ $page.Title }}</span>
+                  </span>
+                </a>
+              </div>
+              <div class="highlights__note">
+                <p class="highlights__note-text" id="highlight-note-{{ $index }}">{{ $slide.blurb }}</p>
+                <button
+                  type="button"
+                  class="highlights__note-toggle"
+                  aria-expanded="false"
+                  aria-controls="highlight-note-{{ $index }}"
+                  aria-label="{{ i18n "highlights.expand" }}"></button>
+              </div>
+            </div>
           {{ end }}
         </div>
       </div>
-      <button type="button" class="highlights__arrow highlights__arrow--next" aria-label="{{ i18n "highlights.next" }}">&#8250;</button>
+      <button type="button" class="highlights__arrow highlights__arrow--next" aria-label="{{ i18n "highlights.next" }}"></button>
     </div>
     <div class="highlights__dots">
-      {{ range $index, $page := $pages }}
+      {{ range $index, $slide := $slides }}
         <button
           type="button"
           class="highlights__dot{{ if eq $index 0 }} is-active{{ end }}"
           data-index="{{ $index }}"
-          aria-label="{{ $page.Title }}"
+          aria-label="{{ $slide.page.Title }}"
           {{ if eq $index 0 }}aria-current="true"{{ end }}></button>
       {{ end }}
+    </div>
+    <div class="mt-10 flex justify-center">
+      <a href="{{ "/projects/" | relLangURL }}">
+        <button
+          type="button"
+          class="bg-transparent hover:text-primary-500 prose dark:prose-invert font-semibold py-2 px-4 border border-primary-500 hover:border-transparent rounded">
+          {{ i18n "highlights.see_more" }}
+        </button>
+      </a>
     </div>
   </section>
   <script>
@@ -55,6 +89,9 @@
       var track = root.querySelector(".highlights__track");
       var slides = root.querySelectorAll(".highlights__slide");
       var dots = root.querySelectorAll(".highlights__dot");
+      var notes = root.querySelectorAll(".highlights__note");
+      var expandLabel = root.getAttribute("data-expand-label");
+      var collapseLabel = root.getAttribute("data-collapse-label");
       var index = 0;
       var timer = null;
       var paused = false;
@@ -67,6 +104,23 @@
           dot.classList.toggle("is-active", on);
           if (on) dot.setAttribute("aria-current", "true");
           else dot.removeAttribute("aria-current");
+        });
+        notes.forEach(function (note) {
+          note.classList.remove("is-open");
+          var toggle = note.querySelector(".highlights__note-toggle");
+          if (!toggle) return;
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.setAttribute("aria-label", expandLabel);
+        });
+        placeArrows();
+      }
+
+      function placeArrows() {
+        var media = root.querySelector(".highlights__media");
+        if (!media) return;
+        var top = media.getBoundingClientRect().height / 2;
+        root.querySelectorAll(".highlights__arrow").forEach(function (arrow) {
+          arrow.style.top = top + "px";
         });
       }
 
@@ -98,6 +152,28 @@
           arm();
         });
       });
+      notes.forEach(function (note) {
+        note.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          var toggle = note.querySelector(".highlights__note-toggle");
+          var open = !note.classList.contains("is-open");
+          notes.forEach(function (other) {
+            other.classList.remove("is-open");
+            var otherToggle = other.querySelector(".highlights__note-toggle");
+            if (!otherToggle) return;
+            otherToggle.setAttribute("aria-expanded", "false");
+            otherToggle.setAttribute("aria-label", expandLabel);
+          });
+          if (open) {
+            note.classList.add("is-open");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-label", collapseLabel);
+          }
+          placeArrows();
+        });
+      });
+      window.addEventListener("resize", placeArrows);
       root.addEventListener("mouseenter", function () {
         paused = true;
         window.clearTimeout(timer);

@@ -1,12 +1,13 @@
 ---
 title: "Japanese talking pictures"
+imageAlt: "The opening page of a journal article, showing the title, a DOI, an abstract, and keywords about Japanese talking pictures."
 date: 2024-07-30
 description: "Magic lanterns, silent cinema, and kamishibai as oral visual media in early twentieth-century Japan."
 summary: "How magic lanterns, silent cinema, and kamishibai shared a tradition of spoken narration in Japan."
 tags: ["kamishibai", "Japan", "media archaeology"]
 ---
 
-![Feature](feature.png)
+![The opening page of a journal article, showing the title, a DOI, an abstract, and keywords about Japanese talking pictures.](feature.png)
 
 [Read in Silva Iaponicarum](https://pressto.amu.edu.pl/index.php/silvajp/article/view/43874)
 

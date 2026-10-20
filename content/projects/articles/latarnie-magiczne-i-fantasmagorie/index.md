@@ -1,5 +1,6 @@
 ---
 title: "Master's Thesis: Latarnie magiczne i fantasmagorie na tle procesu skiagraficznego"
+imageAlt: "A Polish table of contents titled Spis treści, listing chapters on skiagraphy, magic lanterns, and phantasmagoria."
 langBadge: "PL"
 date: 2020-09-29
 description: "A master's thesis on magic lanterns and phantasmagoria within a proposed genealogy of cinema."
@@ -7,7 +8,7 @@ summary: "Magic lanterns and phantasmagoria as stages of the skiagraphic process
 tags: ["magic lanterns", "phantasmagoria", "skiagraphy"]
 ---
 
-![Feature](feature.png)
+![A Polish table of contents titled Spis treści, listing chapters on skiagraphy, magic lanterns, and phantasmagoria.](feature.png)
 
 [Read in the Jagiellonian University Repository](https://ruj.uj.edu.pl/entities/publication/bbdd1eab-e06a-4d58-a85f-25f65d51b97a)
 

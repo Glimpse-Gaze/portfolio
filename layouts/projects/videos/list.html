@@ -5,9 +5,6 @@
     {{ if .Params.showBreadcrumbs | default (site.Params.list.showBreadcrumbs | default false) }}
       {{ partial "breadcrumbs.html" . }}
     {{ end }}
-    {{ if and .IsSection .Parent (eq .Parent.Type "projects") }}
-      {{ partial "projects-back.html" . }}
-    {{ end }}
     <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
       {{ .Title | emojify }}
     </h1>
@@ -35,6 +32,7 @@
   {{ if gt (len $films) 0 }}
     <section class="mt-8 grid gap-4 sm:grid-cols-2">
       {{ range $films }}
+        {{ $imageAlt := .Params.imageAlt | default .Title }}
         {{ $thumb := "" }}
         {{ with .Resources.GetMatch "feature*" }}
           {{ $thumb = .RelPermalink }}
@@ -44,7 +42,7 @@
             {{ with $thumb }}
               <img
                 src="{{ . }}"
-                alt=""
+                alt="{{ $imageAlt }}"
                 class="aspect-video w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                 loading="lazy"
                 decoding="async"
@@ -62,6 +60,7 @@
   {{ if gt (len $shorts) 0 }}
     <section class="mt-8 flex gap-3 overflow-x-auto pb-2">
       {{ range $shorts }}
+        {{ $imageAlt := .Params.imageAlt | default .Title }}
         {{ $thumb := "" }}
         {{ with .Resources.GetMatch "feature*" }}
           {{ $thumb = .RelPermalink }}
@@ -71,7 +70,7 @@
             {{ with $thumb }}
               <img
                 src="{{ . }}"
-                alt=""
+                alt="{{ $imageAlt }}"
                 class="w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                 style="aspect-ratio: 9 / 16;"
                 loading="lazy"
@@ -85,5 +84,10 @@
         </a>
       {{ end }}
     </section>
+  {{ end }}
+  {{ if and .IsSection .Parent (eq .Parent.Type "projects") }}
+    <div class="mt-12 mb-2 flex">
+      {{ partial "projects-back.html" . }}
+    </div>
   {{ end }}
 {{ end }}

@@ -1,5 +1,6 @@
 ---
 title: "W poszukiwaniu genealogii kina – skiagrafie i proces skiagraficzny"
+imageAlt: "The first page of a Kwartalnik Filmowy article, with the Polish title, the author's name, keywords, and an abstract."
 langBadge: "PL"
 date: 2021-05-13
 description: "A media-archaeological proposal for the genealogy of cinema, named skiagraphy after an ancient Greek kind of painting."
@@ -7,7 +8,7 @@ summary: "An attempt to place cinema in a media genealogy the author calls the s
 tags: ["cinema", "skiagraphy", "media archaeology"]
 ---
 
-![Feature](feature.png)
+![The first page of a Kwartalnik Filmowy article, with the Polish title, the author's name, keywords, and an abstract.](feature.png)
 
 [Read in Kwartalnik Filmowy](https://czasopisma.ispan.pl/index.php/kf/article/view/559)
 

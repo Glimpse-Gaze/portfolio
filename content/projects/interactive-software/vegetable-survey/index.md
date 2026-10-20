@@ -1,11 +1,12 @@
 ---
 title: "The Great Vegetable Survey"
+imageAlt: "Survey cards for sweet potato, broccoli, corn, and green bean, each with a photograph and a bar marking a vote between least and most vegetable."
 date: 2026-10-13
 description: "An interactive folk survey of what people mean by vegetable: sort the grey zone, rank a vegetableness spectrum, and compare your answers with a world map."
 summary: "Seven playful questions about a folk category, then interactive boards where your ranking meets everyone else's."
 tags: ["survey", "vegetables", "folk category"]
 ---
-![Feature](feature.png)
+![Survey cards for sweet potato, broccoli, corn, and green bean, each with a photograph and a bar marking a vote between least and most vegetable.](feature.png)
 
 # [Take the Vegetable Survey](https://vegetable.glimpsegaze.com)
 

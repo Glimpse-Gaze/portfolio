@@ -1,5 +1,6 @@
 ---
 title: "The Archaeology of AI: Thinking Machines"
+imageAlt: "A black-and-white engraving of a human head in profile, assembled from gears, springs, levers, and other machine parts."
 date: 2026-09-03
 description: "An essay on the origins of mechanical intelligence."
 summary: "Essay on the origins of mechanical intelligence and historical thinking about AI."

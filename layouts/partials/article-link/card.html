@@ -74,7 +74,7 @@
       style="--thumbnail-aspect-ratio: {{ $thumbnailAspectRatio }}">
       <img
         src="{{ . }}"
-        alt="{{ $page.Title }}"
+        alt="{{ $page.Params.imageAlt | default $page.Title }}"
         loading="lazy"
         decoding="async"
         fetchpriority="low"

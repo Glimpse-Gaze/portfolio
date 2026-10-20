@@ -1,11 +1,12 @@
 ---
 title: "3D Kamishibai Models"
+imageAlt: "A wooden hira-e stage with its side doors open, showing a painted card of a skull in a red cloak and Japanese lettering."
 date: 2026-08-01
 description: "3D model viewer with interactive elements and annotations."
 summary: "Short summary of project one. Replace this with what the project is and why it matters."
 tags: ["kamishibai", "3D"]
 ---
-![Feature](feature.png)
+![A wooden hira-e stage with its side doors open, showing a painted card of a skull in a red cloak and Japanese lettering.](feature.png)
 
 # [Explore Kamishibai Models](https://3d-kamishibai-models.vercel.app)
 **3D Kamishibai Models** is an interactive 3D exhibit that allows visitors to explore reconstructed examples of two historical forms of Japanese paper theatre: **tachi-e** (立ち絵, “standing pictures”) and **hira-e** (平絵, “flat pictures”). Rather than presenting these forms as static objects, the viewer recreates their mechanisms of operation, allowing visitors interact with elements essential for these media. Paper figures or illustrated cards can be manipulated and animated during interaction.

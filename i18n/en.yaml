@@ -9,3 +9,12 @@
 
 - id: highlights.next
   translation: "Next highlight"
+
+- id: highlights.see_more
+  translation: "See more"
+
+- id: highlights.expand
+  translation: "Show the full description"
+
+- id: highlights.collapse
+  translation: "Show less"

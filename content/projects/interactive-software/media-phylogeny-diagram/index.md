@@ -1,12 +1,13 @@
 ---
 title: "Media Phylogeny Diagram"
+imageAlt: "A dark timeline from 1875 to 2026, with media nodes such as tachi-e, hira-e, manga, and kabuki theatre joined by green, yellow, and red lines."
 date: 2026-07-15
 description: "Interactive phylogeny diagram of communication media related to kamishibai."
 summary: "Short summary of project two. Replace this with what the project is and why it matters."
 tags: ["Kamishibai", "Phylogeny"]
 ---
 
-![Feature](feature.png)
+![A dark timeline from 1875 to 2026, with media nodes such as tachi-e, hira-e, manga, and kabuki theatre joined by green, yellow, and red lines.](feature.png)
 
 # [Explore the Media Phylogeny](https://media-phylogeny-diagram.vercel.app)
 
